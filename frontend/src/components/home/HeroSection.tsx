@@ -1,8 +1,6 @@
 import { Link } from 'react-router-dom';
 import { IconArrowRight } from '../icons/FeatureIcons';
 
-const CLIENT_LOGOS = ['Infosys', 'TCS', 'OrangeMantra', 'Meridian', 'ScaleHealth', 'EduFlow'];
-
 export default function HeroSection() {
   return (
     <section className="relative gradient-mesh overflow-hidden">
@@ -33,19 +31,6 @@ export default function HeroSection() {
               >
                 Schedule Consultation
               </Link>
-            </div>
-            <p className="mt-14 text-xs font-semibold text-body/70 uppercase tracking-wider">
-              Trusted by innovative companies
-            </p>
-            <div className="mt-4 flex flex-wrap gap-4 items-center">
-              {CLIENT_LOGOS.map((name) => (
-                <div
-                  key={name}
-                  className="h-10 px-5 bg-surface/80 border border-border rounded-xl flex items-center justify-center text-sm font-medium text-body/80 shadow-sm"
-                >
-                  {name}
-                </div>
-              ))}
             </div>
           </div>
           {/* Animated UI preview - tech feel */}

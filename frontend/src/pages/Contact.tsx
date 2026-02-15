@@ -5,10 +5,79 @@ import { Link } from 'react-router-dom';
 
 export default function Contact() {
   const [submitted, setSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    company: '',
+    message: '',
+  });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const validateForm = () => {
+    const name = formData.name.trim();
+    const email = formData.email.trim();
+    const message = formData.message.trim();
+
+    if (!name || !email || !message) {
+      return 'Please fill in all required fields.';
+    }
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      return 'Please enter a valid email address.';
+    }
+
+    return '';
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setSubmitted(true);
+    setErrorMessage('');
+
+    const validationError = validateForm();
+    if (validationError) {
+      setErrorMessage(validationError);
+      return;
+    }
+
+    setIsSubmitting(true);
+
+    try {
+      const payload = {
+        name: formData.name.trim(),
+        email: formData.email.trim(),
+        message: formData.message.trim(),
+        ...(formData.company.trim() ? { company: formData.company.trim() } : {}),
+      };
+
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(payload),
+      });
+
+      const data = await response.json().catch(() => ({}));
+
+      if (!response.ok || !data?.success) {
+        throw new Error(data?.message || 'Failed to send message.');
+      }
+
+      setSubmitted(true);
+      setFormData({ name: '', email: '', company: '', message: '' });
+    } catch (error) {
+      const message = error instanceof Error ? error.message : 'Something went wrong.';
+      setErrorMessage(message);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -26,26 +95,29 @@ export default function Contact() {
                 {submitted ? (
                   <p className="text-slate-muted">Thanks. We'll be in touch shortly to schedule a call.</p>
                 ) : (
-                  <form onSubmit={handleSubmit} className="space-y-4">
+                  <form onSubmit={handleSubmit} className="space-y-4" aria-busy={isSubmitting}>
                     <div>
                       <label htmlFor="name" className="block text-sm font-medium text-slate mb-1">Name</label>
-                      <input id="name" name="name" type="text" required className="w-full px-4 py-2.5 rounded-lg border border-divider text-slate focus:outline-none focus:ring-2 focus:ring-accent/20 focus:border-accent" />
+                      <input id="name" name="name" type="text" required value={formData.name} onChange={handleChange} className="w-full px-4 py-2.5 rounded-lg border border-divider text-slate focus:outline-none focus:ring-2 focus:ring-accent/20 focus:border-accent" />
                     </div>
                     <div>
                       <label htmlFor="email" className="block text-sm font-medium text-slate mb-1">Email</label>
-                      <input id="email" name="email" type="email" required className="w-full px-4 py-2.5 rounded-lg border border-divider text-slate focus:outline-none focus:ring-2 focus:ring-accent/20 focus:border-accent" />
+                      <input id="email" name="email" type="email" required value={formData.email} onChange={handleChange} className="w-full px-4 py-2.5 rounded-lg border border-divider text-slate focus:outline-none focus:ring-2 focus:ring-accent/20 focus:border-accent" />
                     </div>
                     <div>
                       <label htmlFor="company" className="block text-sm font-medium text-slate mb-1">Company</label>
-                      <input id="company" name="company" type="text" className="w-full px-4 py-2.5 rounded-lg border border-divider text-slate focus:outline-none focus:ring-2 focus:ring-accent/20 focus:border-accent" />
+                      <input id="company" name="company" type="text" value={formData.company} onChange={handleChange} className="w-full px-4 py-2.5 rounded-lg border border-divider text-slate focus:outline-none focus:ring-2 focus:ring-accent/20 focus:border-accent" />
                     </div>
                     <div>
                       <label htmlFor="message" className="block text-sm font-medium text-slate mb-1">What do you need help with?</label>
-                      <textarea id="message" name="message" rows={4} className="w-full px-4 py-2.5 rounded-lg border border-divider text-slate focus:outline-none focus:ring-2 focus:ring-accent/20 focus:border-accent" />
+                      <textarea id="message" name="message" rows={4} required value={formData.message} onChange={handleChange} className="w-full px-4 py-2.5 rounded-lg border border-divider text-slate focus:outline-none focus:ring-2 focus:ring-accent/20 focus:border-accent" />
                     </div>
-                    <button type="submit" className="inline-flex items-center justify-center px-6 py-3.5 text-sm font-semibold text-white bg-accent hover:bg-accent-hover rounded-lg transition-colors">
-                      Request a call
+                    <button type="submit" className="inline-flex items-center justify-center px-6 py-3.5 text-sm font-semibold text-white bg-accent hover:bg-accent-hover rounded-lg transition-colors" disabled={isSubmitting}>
+                      {isSubmitting ? 'Sending...' : 'Request a call'}
                     </button>
+                    {errorMessage ? (
+                      <p className="text-sm text-red-600" role="alert">{errorMessage}</p>
+                    ) : null}
                   </form>
                 )}
                 <p className="mt-6 text-sm text-slate-muted">

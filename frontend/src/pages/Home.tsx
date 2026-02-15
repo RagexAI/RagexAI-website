@@ -1,6 +1,6 @@
 import ScrollReveal from '../components/ui/ScrollReveal';
 import HeroSection from '../components/home/HeroSection';
-import TrustSection from '../components/home/TrustSection';
+
 import AIFirstSection from '../components/home/AIFirstSection';
 import ServicesSection from '../components/home/ServicesSection';
 import SolutionsOverviewSection from '../components/home/SolutionsOverviewSection';
@@ -28,9 +28,7 @@ export default function Home() {
   return (
     <>
       <HeroSection />
-      <ScrollReveal>
-        <TrustSection />
-      </ScrollReveal>
+      
       <AIFirstSection />
       <ServicesSection />
       <SolutionsOverviewSection />
