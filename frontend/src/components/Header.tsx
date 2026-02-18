@@ -13,18 +13,18 @@ import Button from './ui/Button';
 // AI First Mega Menu Items
 const AI_FIRST_ITEMS = {
   'Core AI': [
-    { label: 'Custom AI Model Development', href: '/ai/core-ai' },
-    { label: 'NLP Solutions', href: '/ai/core-ai' },
-    { label: 'Computer Vision', href: '/ai/core-ai' },
-    { label: 'Predictive Analytics', href: '/ai/core-ai' },
-    { label: 'Recommendation Systems', href: '/ai/core-ai' },
+    { label: 'Custom AI Model Development', href: '/ai/core-ai/custom-ai-models' },
+    { label: 'NLP Solutions', href: '/ai/core-ai/nlp-solutions' },
+    { label: 'Computer Vision', href: '/ai/core-ai/computer-vision' },
+    { label: 'Predictive Analytics', href: '/ai/core-ai/predictive-analytics' },
+    { label: 'Recommendation Systems', href: '/ai/core-ai/recommendation-systems' },
   ],
   'Agentic AI': [
-    { label: 'Autonomous AI Agents', href: '/ai/agentic-ai' },
-    { label: 'Workflow Automation Agents', href: '/ai/agentic-ai' },
-    { label: 'AI Chat Assistants', href: '/ai/agentic-ai' },
-    { label: 'Multi-Agent Systems', href: '/ai/agentic-ai' },
-    { label: 'Business Process Automation', href: '/ai/agentic-ai' },
+    { label: 'Autonomous AI Agents', href: '/ai/agentic-ai/autonomous-agents' },
+    { label: 'Workflow Automation Agents', href: '/ai/agentic-ai/workflow-automation' },
+    { label: 'AI Chat Assistants', href: '/ai/agentic-ai/ai-assistants' },
+    { label: 'Multi-Agent Systems', href: '/ai/agentic-ai/multi-agent-systems' },
+    { label: 'Business Process Automation', href: '/ai/agentic-ai/business-automation' },
   ],
   'AI Solutions': [
     { label: 'AI for E-commerce', href: '/ai/solutions/ecommerce' },
