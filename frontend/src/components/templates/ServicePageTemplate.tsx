@@ -22,7 +22,9 @@ interface ServicePageTemplateProps {
       starter: string;
       enterprise: string;
     };
+    [key: string]: unknown;
   };
+  caseStudies?: unknown[];
 }
 
 const ServicePageTemplate = ({ service }: ServicePageTemplateProps) => {

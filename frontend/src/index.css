@@ -2,127 +2,481 @@
 @tailwind components;
 @tailwind utilities;
 
-/**
- * Global CSS Variables for Theme System
- * Light mode (default) and dark mode support
- * To change colors globally, update the HSL values below
- */
+/* ═══════════════════════════════════════════════════════════════
+   RAGEX AI  ·  Design System
+   Inspired by Kore.ai — clean, airy, enterprise-grade
+   ONE primary: #1a56c4  |  ONE accent: #0d9488 (teal, sparingly)
+   Background family: #f2f7fb → #dce8f3 → #c3d5e6 → #aabed4
+   ═══════════════════════════════════════════════════════════════ */
 
 :root {
-  /* Light Mode Colors (Default) */
-  --color-primary: 222 89% 55%;
-  --color-secondary: 262 83% 58%;
-  --color-accent: 160 84% 39%;
-  
-  --color-background: 0 0% 100%;
-  --color-surface: 210 20% 98%;
-  
-  --color-heading: 222 47% 11%;
-  --color-body: 215 16% 47%;
-  --color-muted: 214 32% 91%;
-  
-  --color-border: 214 32% 91%;
-  
-  --color-success: 160 84% 39%;
-  --color-warning: 38 92% 50%;
-  --color-error: 0 84% 60%;
-  --color-info: 222 89% 55%;
+  --blue:       #1a56c4;
+  --blue-mid:   #1e68d8;
+  --blue-light: #3b82f6;
+  --teal:       #0d9488;
+  --navy:       #0a1628;
+  --navy-mid:   #1c2e4a;
+  --sky-0:      #f2f7fb;   /* background center */
+  --sky-1:      #dce8f3;
+  --sky-2:      #c3d5e6;
+  --sky-3:      #aabed4;   /* background edge   */
+  --white-glass: rgba(255, 255, 255, 0.72);
+  --white-glass-hover: rgba(255, 255, 255, 0.90);
+  --border-glass: rgba(255, 255, 255, 0.85);
+  --text-primary:   #0a1628;
+  --text-secondary: #3d5070;
+  --text-muted:     #7a92b0;
 }
 
-/* Dark Mode Colors */
-.dark {
-  --color-primary: 222 89% 65%;
-  --color-secondary: 262 83% 68%;
-  --color-accent: 160 84% 49%;
-  
-  --color-background: 222 47% 11%;
-  --color-surface: 223 47% 15%;
-  
-  --color-heading: 210 40% 98%;
-  --color-body: 214 32% 91%;
-  --color-muted: 215 25% 27%;
-  
-  --color-border: 215 25% 27%;
-  
-  --color-success: 160 84% 49%;
-  --color-warning: 38 92% 60%;
-  --color-error: 0 84% 70%;
-  --color-info: 222 89% 65%;
-}
+/* ─── Reset ─────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; background: transparent; }
 
-* {
-  box-sizing: border-box;
-}
-
-html {
-  scroll-behavior: smooth;
-}
+/* All sections see through to GlobalBackground */
+section { background: transparent !important; }
+#root { background: transparent; }
 
 body {
-  font-family: 'Plus Jakarta Sans', 'Inter', system-ui, -apple-system, sans-serif;
-  background-color: hsl(var(--color-background));
-  color: hsl(var(--color-heading));
+  font-family: 'Inter', 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.7;
+  color: var(--text-primary);
+  /* Background handled by GlobalBackground (fixed, z-index: -1) */
+  background: transparent;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  font-feature-settings: 'kern' 1, 'liga' 1, 'ss01' 1;
+  overflow-x: hidden;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Inter', 'Plus Jakarta Sans', system-ui, sans-serif;
+  font-weight: 600;        /* enterprise weight — not heavy 700/800 */
+  line-height: 1.4;
+  letter-spacing: -0.018em;
+  color: #0f172a;          /* deep slate — single tone */
+}
+
+/* ─── Section dividers — very subtle, not color breaks ─────── */
+.section + .section::before,
+.section-py + .section-py::before {
+  content: '';
+  display: block;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(100,150,200,0.10), transparent);
+  margin-bottom: 0;
+}
+
+/* ─── Scrollbar ─────────────────────────────────────────────── */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: var(--sky-0); }
+::-webkit-scrollbar-thumb { background: var(--sky-2); border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: var(--blue); }
+
+::selection { background: rgba(26, 86, 196, 0.12); }
+:focus-visible { outline: 2px solid var(--blue); outline-offset: 2px; border-radius: 4px; }
+
+/* ═══════════════════════════════════════════════════════════════
+   KEYFRAMES
+   ═══════════════════════════════════════════════════════════════ */
+
+/* Slow floating blobs — kore.ai signature */
+@keyframes blob1 {
+  0%,100% { transform: translate(0, 0)   scale(1);    }
+  25%      { transform: translate(40px, -30px) scale(1.06); }
+  50%      { transform: translate(-25px, 35px) scale(0.96); }
+  75%      { transform: translate(20px,  18px) scale(1.03); }
+}
+@keyframes blob2 {
+  0%,100% { transform: translate(0, 0)   scale(1);    }
+  33%      { transform: translate(-35px, 25px) scale(1.05); }
+  66%      { transform: translate(30px, -20px) scale(0.97); }
+}
+@keyframes blob3 {
+  0%,100% { transform: translate(0, 0);   }
+  50%      { transform: translate(20px, -40px) scale(1.04); }
+}
+
+/* Ring pulse — very subtle */
+@keyframes ring-pulse {
+  0%,100% { opacity: 0.12; transform: translate(-50%,-50%) scale(1);    }
+  50%      { opacity: 0.06; transform: translate(-50%,-50%) scale(1.02); }
+}
+
+/* Fade up — scroll reveal */
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(28px); }
+  to   { opacity: 1; transform: translateY(0);    }
+}
+@keyframes fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* Typewriter cursor */
+@keyframes blink {
+  0%,100% { opacity: 1; }
+  50%      { opacity: 0; }
+}
+
+/* Float badge */
+@keyframes float-y {
+  0%,100% { transform: translateY(0); }
+  50%      { transform: translateY(-8px); }
+}
+
+/* Gradient text shift */
+@keyframes grad-shift {
+  0%,100% { background-position: 0% 50%;   }
+  50%      { background-position: 100% 50%; }
+}
+
+/* Shimmer */
+@keyframes shimmer {
+  from { transform: translateX(-100%) skewX(-12deg); }
+  to   { transform: translateX(220%)  skewX(-12deg); }
+}
+
+/* Wave bars */
+@keyframes wave {
+  0%,100% { transform: scaleY(0.4); }
+  50%      { transform: scaleY(1.2); }
+}
+
+/* Orbit */
+@keyframes orbit {
+  from { transform: rotate(0deg)   translateX(75px) rotate(0deg);    }
+  to   { transform: rotate(360deg) translateX(75px) rotate(-360deg); }
+}
+@keyframes orbit-rev {
+  from { transform: rotate(360deg) translateX(105px) rotate(-360deg); }
+  to   { transform: rotate(0deg)   translateX(105px) rotate(0deg);    }
+}
+
+/* Pulse ring */
+@keyframes pulse-ring {
+  0%   { transform: scale(0.85); opacity: 1; }
+  100% { transform: scale(2.2);  opacity: 0; }
+}
+
+/* Morph blob */
+@keyframes morph {
+  0%   { border-radius: 60% 40% 30% 70%/60% 30% 70% 40%; }
+  50%  { border-radius: 30% 60% 70% 40%/50% 60% 30% 60%; }
+  100% { border-radius: 60% 40% 30% 70%/60% 30% 70% 40%; }
+}
+
+/* Matrix fall */
+@keyframes matrix-fall {
+  0%   { transform: translateY(-100%); opacity: 1;   }
+  80%  {                               opacity: 0.8; }
+  100% { transform: translateY(100vh); opacity: 0;   }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   ANIMATION UTILITIES
+   ═══════════════════════════════════════════════════════════════ */
+.anim-blob1   { animation: blob1 28s ease-in-out infinite; }
+.anim-blob2   { animation: blob2 22s ease-in-out infinite; animation-delay: -8s; }
+.anim-blob3   { animation: blob3 18s ease-in-out infinite; animation-delay: -4s; }
+.anim-float   { animation: float-y 5s ease-in-out infinite; }
+.anim-blink   { animation: blink 1s step-end infinite; }
+.anim-shimmer { animation: shimmer 2.6s ease infinite; }
+.anim-wave    { animation: wave 1s ease-in-out infinite; }
+.anim-orbit   { animation: orbit 9s linear infinite; }
+.anim-orbit-r { animation: orbit-rev 14s linear infinite; }
+.anim-morph   { animation: morph 8s ease-in-out infinite; }
+.anim-pulse   { animation: pulse-ring 2s ease-out infinite; }
+
+/* Stagger reveal (used by framer-motion fallback or plain CSS) */
+.reveal-1 { animation: fade-up 0.6s cubic-bezier(.16,1,.3,1) 0.05s both; }
+.reveal-2 { animation: fade-up 0.6s cubic-bezier(.16,1,.3,1) 0.12s both; }
+.reveal-3 { animation: fade-up 0.6s cubic-bezier(.16,1,.3,1) 0.19s both; }
+.reveal-4 { animation: fade-up 0.6s cubic-bezier(.16,1,.3,1) 0.26s both; }
+.reveal-5 { animation: fade-up 0.6s cubic-bezier(.16,1,.3,1) 0.33s both; }
+.reveal-6 { animation: fade-up 0.6s cubic-bezier(.16,1,.3,1) 0.40s both; }
+
+/* ═══════════════════════════════════════════════════════════════
+   GLOBAL BACKGROUND SYSTEM
+   ═══════════════════════════════════════════════════════════════ */
+
+/* sky-bg / sky-bg-light kept for legacy compat — transparent now, global bg handles it */
+.sky-bg, .sky-bg-light { background: transparent !important; }
+
+/* Grain texture overlay — 2% opacity */
+.grain::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.02'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 256px 256px;
+  pointer-events: none;
+  opacity: 0.35;
+  z-index: 1;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   GLASS CARD  — unified across ALL sections
+   ONE style. No rainbow. No competing borders.
+   ═══════════════════════════════════════════════════════════════ */
+.glass-card {
+  background: rgba(255, 255, 255, 0.55);
+  backdrop-filter: blur(20px) saturate(160%);
+  -webkit-backdrop-filter: blur(20px) saturate(160%);
+  border-radius: 24px;
+  border: 1px solid rgba(255, 255, 255, 0.40);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.05);
+  transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+.glass-card:hover {
+  transform: translateY(-6px);
+  background: rgba(255, 255, 255, 0.72);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.07), 0 4px 16px rgba(0, 0, 0, 0.03);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   TYPOGRAPHY SCALE  — Inter, controlled, enterprise-grade
+   Single heading color: #0f172a (deep slate)
+   ═══════════════════════════════════════════════════════════════ */
+.t-h1 {
+  font-family: 'Inter', 'Plus Jakarta Sans', sans-serif;
+  font-size: clamp(36px, 5vw, 52px);
+  font-weight: 600;          /* not 700 — lighter feels more premium */
+  line-height: 1.15;
+  letter-spacing: -0.025em;
+  color: #0f172a;
+}
+.t-h2 {
+  font-family: 'Inter', 'Plus Jakarta Sans', sans-serif;
+  font-size: clamp(24px, 3.5vw, 36px);
+  font-weight: 600;
+  line-height: 1.25;
+  letter-spacing: -0.020em;
+  color: #0f172a;
+}
+.t-h3 {
+  font-family: 'Inter', sans-serif;
+  font-size: clamp(16px, 2vw, 20px);
+  font-weight: 500;
+  line-height: 1.35;
+  letter-spacing: -0.012em;
+  color: #0f172a;
+}
+.t-body {
+  font-family: 'Inter', sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.65;
+  color: #334155;            /* slate-700 — calm enterprise body */
+}
+.t-small {
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  font-weight: 400;
   line-height: 1.6;
-  transition: background-color 200ms ease, color 200ms ease;
+  color: #64748b;            /* slate-500 — muted secondary */
+}
+.t-label {
+  font-family: 'Inter', sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--blue);
 }
 
-/* Premium gradients */
-.gradient-mesh {
-  background-color: hsl(var(--color-background));
-  background-image:
-    radial-gradient(at 40% 20%, hsl(var(--color-primary) / 0.08) 0px, transparent 50%),
-    radial-gradient(at 80% 0%, hsl(var(--color-secondary) / 0.06) 0px, transparent 50%),
-    radial-gradient(at 0% 50%, hsl(var(--color-accent) / 0.05) 0px, transparent 50%);
+/* ═══════════════════════════════════════════════════════════════
+   GRADIENT TEXT — very subtle, only for sparingly used emphasis
+   Removed from all headings; kept as utility if needed
+   ═══════════════════════════════════════════════════════════════ */
+.text-gradient {
+  /* No gradient — single tone, enterprise style */
+  color: #0f172a;
 }
 
-.gradient-card-hover {
-  background: linear-gradient(135deg, hsl(var(--color-surface)) 0%, hsl(var(--color-surface)) 100%);
-  transition: box-shadow 0.3s ease, transform 0.3s ease, background 0.3s ease;
+/* ═══════════════════════════════════════════════════════════════
+   ICON BOX — one consistent style
+   ═══════════════════════════════════════════════════════════════ */
+.icon-box {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  background: rgba(26, 86, 196, 0.08);
+  border: 1px solid rgba(26, 86, 196, 0.12);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--blue);
+  flex-shrink: 0;
+  transition: background 0.25s ease;
 }
-.gradient-card-hover:hover {
-  box-shadow: 0 20px 40px -15px hsl(var(--color-primary) / 0.15), 0 0 0 1px hsl(var(--color-border));
-  transform: translateY(-4px);
+.glass-card:hover .icon-box {
+  background: rgba(26, 86, 196, 0.13);
 }
 
-.glass {
-  background: hsl(var(--color-surface) / 0.8);
+/* ═══════════════════════════════════════════════════════════════
+   BUTTONS
+   ═══════════════════════════════════════════════════════════════ */
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 26px;
+  background: #0f172a;       /* deep slate, not navy blue — enterprise dark */
+  color: #ffffff;
+  border-radius: 9px;
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.005em;
+  border: none;
+  cursor: pointer;
+  transition: all 0.22s ease;
+  box-shadow: 0 2px 8px rgba(15,23,42,0.22), 0 1px 2px rgba(15,23,42,0.12);
+}
+.btn-primary:hover { transform: translateY(-1px); box-shadow: 0 6px 18px rgba(15,23,42,0.28); }
+
+.btn-outline {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 11px 24px;
+  background: rgba(255,255,255,0.50);
   backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  color: #0f172a;
+  border-radius: 9px;
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.005em;
+  border: 1px solid rgba(15,23,42,0.14);
+  cursor: pointer;
+  transition: all 0.22s ease;
+}
+.btn-outline:hover {
+  background: rgba(255,255,255,0.72);
+  border-color: rgba(15,23,42,0.22);
+  transform: translateY(-1px);
 }
 
-/* Section backgrounds */
-.section-gradient {
-  background: linear-gradient(180deg, hsl(var(--color-background)) 0%, hsl(var(--color-surface) / 0.5) 100%);
+.btn-blue {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 26px;
+  background: linear-gradient(135deg, var(--blue), var(--blue-mid));
+  color: #fff;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  box-shadow: 0 4px 16px rgba(26, 86, 196, 0.28);
+}
+.btn-blue:hover { transform: translateY(-1px) scale(1.02); box-shadow: 0 8px 24px rgba(26, 86, 196, 0.36); }
+
+/* ═══════════════════════════════════════════════════════════════
+   EYEBROW / LABEL PILL
+   ═══════════════════════════════════════════════════════════════ */
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 14px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.55);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.60);
+  font-family: 'Inter', sans-serif;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #475569;            /* slate-600 — muted, not vivid blue */
+  box-shadow: 0 1px 4px rgba(0,0,0,0.04);
 }
 
-/* Custom scrollbar styles */
-::-webkit-scrollbar {
-  width: 10px;
+/* ═══════════════════════════════════════════════════════════════
+   STAT ROW
+   ═══════════════════════════════════════════════════════════════ */
+.stat-number {
+  font-size: clamp(28px, 4vw, 40px);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  color: var(--navy);
+  font-family: 'Plus Jakarta Sans', sans-serif;
+}
+.stat-label {
+  font-size: 13px;
+  color: var(--text-muted);
+  margin-top: 2px;
 }
 
-::-webkit-scrollbar-track {
-  background: hsl(var(--color-surface));
+/* ═══════════════════════════════════════════════════════════════
+   PRODUCT WINDOW (animation preview frame)
+   ═══════════════════════════════════════════════════════════════ */
+.pw {
+  background: rgba(255,255,255,0.88);
+  border-radius: 14px;
+  border: 1px solid rgba(255,255,255,0.95);
+  box-shadow:
+    0 2px 4px rgba(10,22,40,0.04),
+    0 12px 32px rgba(10,22,40,0.10);
+  overflow: hidden;
+}
+.pw-chrome {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 9px 12px;
+  background: rgba(240,245,252,0.95);
+  border-bottom: 1px solid rgba(200,215,235,0.7);
+}
+.pw-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
 }
 
-::-webkit-scrollbar-thumb {
-  background: hsl(var(--color-muted));
-  border-radius: 5px;
+/* ═══════════════════════════════════════════════════════════════
+   SECTION SPACING
+   ═══════════════════════════════════════════════════════════════ */
+.section { padding: clamp(72px, 9vw, 112px) 0; }
+.section-sm { padding: clamp(48px, 6vw, 72px) 0; }
+.container { max-width: 1200px; margin: 0 auto; padding: 0 clamp(20px, 4vw, 48px); }
+
+/* ═══════════════════════════════════════════════════════════════
+   DIVIDER
+   ═══════════════════════════════════════════════════════════════ */
+.divider {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(170,190,212,0.6), transparent);
 }
 
-::-webkit-scrollbar-thumb:hover {
-  background: hsl(var(--color-body));
-}
-
-/* Selection styles */
-::selection {
-  background-color: hsl(var(--color-primary) / 0.2);
-  color: hsl(var(--color-heading));
-}
-
-/* Focus visible styles */
-:focus-visible {
-  outline: 2px solid hsl(var(--color-primary));
-  outline-offset: 2px;
-}
+/* ═══════════════════════════════════════════════════════════════
+   LEGACY COMPAT (keep tailwind custom sections working)
+   ═══════════════════════════════════════════════════════════════ */
+.section-py { padding-top: clamp(72px, 9vw, 112px); padding-bottom: clamp(72px, 9vw, 112px); }
+.bg-sky-mesh { background: transparent !important; }
+.bg-sky-section { background: transparent !important; }
+.bg-dots { background-image: radial-gradient(rgba(100,150,210,0.18) 1px, transparent 1px); background-size: 28px 28px; }
+.text-gradient-2 { background: linear-gradient(135deg, #0d9488, #1e68d8); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+.tag { display: inline-flex; align-items: center; gap: 5px; padding: 3px 11px; border-radius: 999px; font-size: 11px; font-weight: 600; letter-spacing: 0.01em; border: 1px solid rgba(170,190,212,0.5); background: rgba(255,255,255,0.7); color: var(--text-secondary); }
+.tag-primary { border-color: rgba(26,86,196,0.22); background: rgba(26,86,196,0.07); color: var(--blue); }
+.tilt-card { transform-style: preserve-3d; transition: transform 0.12s ease, box-shadow 0.3s ease; will-change: transform; }
+.tilt-card .tilt-shine { position: absolute; inset: 0; border-radius: inherit; pointer-events: none; opacity: 0; transition: opacity 0.2s ease; }
+.feature-card { background: linear-gradient(145deg, #0d1c38 0%, #122040 50%, #17315c 100%); border-radius: 20px; overflow: hidden; position: relative; }
+.product-window { background: rgba(255,255,255,0.9); border-radius: 14px; border: 1px solid rgba(255,255,255,0.95); box-shadow: 0 4px 6px rgba(10,22,40,0.05), 0 16px 40px rgba(10,22,40,0.10); overflow: hidden; }
+.product-window-chrome { display: flex; align-items: center; gap: 6px; padding: 9px 13px; background: rgba(240,245,252,0.95); border-bottom: 1px solid rgba(200,215,235,0.7); }
+.product-window-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
+.stagger-1 { animation: fade-up 0.55s cubic-bezier(.16,1,.3,1) 0.05s both; }
+.stagger-2 { animation: fade-up 0.55s cubic-bezier(.16,1,.3,1) 0.12s both; }
+.stagger-3 { animation: fade-up 0.55s cubic-bezier(.16,1,.3,1) 0.19s both; }
+.stagger-4 { animation: fade-up 0.55s cubic-bezier(.16,1,.3,1) 0.26s both; }
+.stagger-5 { animation: fade-up 0.55s cubic-bezier(.16,1,.3,1) 0.33s both; }
+.stagger-6 { animation: fade-up 0.55s cubic-bezier(.16,1,.3,1) 0.40s both; }

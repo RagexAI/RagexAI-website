@@ -1,66 +1,118 @@
-import { Link } from 'react-router-dom';
-import ScrollReveal from '../ui/ScrollReveal';
-import SectionTitle from '../ui/SectionTitle';
-import { IconBrain, IconRobot, IconTarget, IconArrowRight } from '../icons/FeatureIcons';
+import { motion } from 'framer-motion';
+import { CodeEditorAnimation, ChatBotAnimation, PipelineAnimation } from '../animations/AnimatedPreviews';
 
 const PILLARS = [
   {
-    title: 'Core AI',
-    description: 'Custom AI models, NLP, computer vision, predictive analytics, and recommendation systems.',
-    href: '/ai/core-ai',
-    Icon: IconBrain,
-    gradient: 'from-violet-500/10 to-primary/10',
-    iconColor: 'text-primary',
+    title: 'Core AI Models',
+    subtitle: 'Trained to perfection',
+    desc: 'Custom language models, computer vision systems, and predictive engines — fine-tuned for your domain and deployed at scale.',
+    tag: 'Model Engineering',
+    Preview: CodeEditorAnimation,
+    windowTitle: 'model-training.py',
   },
   {
     title: 'Agentic AI',
-    description: 'Autonomous agents, workflow automation, AI chat assistants, and multi-agent systems.',
-    href: '/ai/agentic-ai',
-    Icon: IconRobot,
-    gradient: 'from-cyan-500/10 to-primary/10',
-    iconColor: 'text-cyan-600',
+    subtitle: 'Think. Plan. Execute.',
+    desc: 'Autonomous agents that reason across multi-step workflows, integrate with your tools, and operate 24/7 with minimal human oversight.',
+    tag: 'Autonomous Systems',
+    Preview: ChatBotAnimation,
+    windowTitle: 'agent-runtime — live',
   },
   {
-    title: 'AI Solutions',
-    description: 'Industry-specific AI for E-commerce, Healthcare, FinTech, and enterprise integration.',
-    href: '/ai/solutions',
-    Icon: IconTarget,
-    gradient: 'from-accent/10 to-emerald-500/10',
-    iconColor: 'text-accent',
+    title: 'AI Data Pipelines',
+    subtitle: 'Data → Insight → Action',
+    desc: 'Real-time ingestion, vector databases, feature stores, and automated ML workflows — enterprise-scale data infrastructure.',
+    tag: 'Data Engineering',
+    Preview: PipelineAnimation,
+    windowTitle: 'pipeline-monitor',
   },
 ];
 
+const cardVariants = {
+  hidden:  { opacity: 0, y: 24 },
+  visible: (i: number) => ({
+    opacity: 1, y: 0,
+    transition: { duration: 0.6, delay: i * 0.1, ease: 'easeOut' as const },
+  }),
+};
+
 export default function AIFirstSection() {
   return (
-    <section className="py-section bg-surface section-gradient">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <ScrollReveal>
-          <SectionTitle
-            title="AI First"
-            subtitle="What AI-First means and why it matters for your business"
-          />
-        </ScrollReveal>
-        <p className="mt-6 text-center text-body max-w-3xl mx-auto leading-relaxed text-base">
-          We lead with artificial intelligence in every solution—so your products are smarter, faster, and ready for the future. AI-First means building intelligence into the core of your systems, not bolting it on later.
-        </p>
-        <div className="mt-14 grid md:grid-cols-3 gap-8">
-          {PILLARS.map((pillar) => (
-            <ScrollReveal key={pillar.title}>
-              <Link
-                to={pillar.href}
-                className="group block h-full rounded-2xl border border-border bg-white p-8 shadow-sm gradient-card-hover"
-              >
-                <div className={`w-14 h-14 rounded-2xl bg-gradient-to-br ${pillar.gradient} flex items-center justify-center mb-6`}>
-                  <pillar.Icon className={`w-7 h-7 ${pillar.iconColor}`} />
+    <section className="section relative overflow-hidden">
+
+      <div className="container relative" style={{ zIndex: 2 }}>
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6, ease: 'easeOut' as const }}
+          className="text-center mb-14"
+        >
+          <span className="eyebrow mb-5 inline-flex">AI-First Philosophy</span>
+          <h2 className="t-h2 mt-4">
+            Not just AI features —<br />
+            AI as the foundation
+          </h2>
+          <p className="t-body mx-auto mt-4" style={{ maxWidth: 500 }}>
+            Every solution we build has intelligence woven into its core architecture — not bolted on as an afterthought.
+          </p>
+        </motion.div>
+
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          {PILLARS.map((p, i) => (
+            <motion.article
+              key={i}
+              custom={i}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, margin: '-40px' }}
+              variants={cardVariants}
+              className="glass-card overflow-hidden"
+            >
+              {/* Animation preview */}
+              <div style={{ padding: 0 }}>
+                <div style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: 5,
+                  padding: '8px 12px',
+                  background: 'rgba(235,242,252,0.95)',
+                  borderBottom: '1px solid rgba(200,215,235,0.7)',
+                }}>
+                  <span style={{ width: 7, height: 7, borderRadius: '50%', background: '#ff5f57', display: 'inline-block' }} />
+                  <span style={{ width: 7, height: 7, borderRadius: '50%', background: '#febc2e', display: 'inline-block' }} />
+                  <span style={{ width: 7, height: 7, borderRadius: '50%', background: '#28c840', display: 'inline-block' }} />
+                  <span style={{ marginLeft: 8, fontSize: 9, fontWeight: 600, color: '#7a92b0', fontFamily: 'JetBrains Mono, monospace' }}>
+                    {p.windowTitle}
+                  </span>
+                  <span style={{
+                    marginLeft: 'auto', fontSize: 8, fontWeight: 700, color: '#059669',
+                    background: 'rgba(5,150,105,0.08)', border: '1px solid rgba(5,150,105,0.18)',
+                    padding: '1px 6px', borderRadius: 999,
+                  }}>● LIVE</span>
                 </div>
-                <h3 className="text-xl font-bold text-heading mb-3">{pillar.title}</h3>
-                <p className="text-body text-sm leading-relaxed mb-6 min-h-[3.5rem]">{pillar.description}</p>
-                <span className="inline-flex items-center text-sm font-semibold text-accent group-hover:gap-2 gap-1 transition-all">
-                  Explore {pillar.title}
-                  <IconArrowRight className="w-4 h-4 flex-shrink-0" />
-                </span>
-              </Link>
-            </ScrollReveal>
+                <div style={{ height: 180, overflow: 'hidden' }}>
+                  <p.Preview />
+                </div>
+              </div>
+
+              {/* Text */}
+              <div className="p-6">
+                <span style={{
+                  fontSize: 10, fontWeight: 700,
+                  padding: '2px 9px', borderRadius: 999,
+                  background: 'rgba(26,86,196,0.07)',
+                  border: '1px solid rgba(26,86,196,0.14)',
+                  color: 'var(--blue)',
+                  display: 'inline-block',
+                  marginBottom: 12,
+                  letterSpacing: '0.04em',
+                }}>{p.tag}</span>
+                <h3 className="t-h3 mb-1">{p.title}</h3>
+                <p style={{ fontSize: 12, fontWeight: 600, color: 'var(--blue)', marginBottom: 10 }}>{p.subtitle}</p>
+                <p className="t-small" style={{ color: 'var(--text-secondary)' }}>{p.desc}</p>
+              </div>
+            </motion.article>
           ))}
         </div>
       </div>
