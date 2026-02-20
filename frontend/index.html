@@ -2,12 +2,58 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- ── Primary SEO ─────────────────────────────────────────── -->
     <title>RagexAI — Engineering Intelligent Digital Experiences</title>
+    <meta name="description" content="RagexAI builds production-ready AI platforms, agentic systems, and intelligent automation solutions for enterprise businesses. Custom AI models, NLP, computer vision, and full-stack AI development." />
+    <meta name="keywords" content="AI development, custom AI models, agentic AI, NLP solutions, computer vision, enterprise AI, AI automation, machine learning" />
+    <meta name="author" content="RagexAI" />
+    <meta name="robots" content="index, follow" />
+
+    <!-- ── Open Graph ──────────────────────────────────────────── -->
+    <meta property="og:type"        content="website" />
+    <meta property="og:title"       content="RagexAI — Engineering Intelligent Digital Experiences" />
+    <meta property="og:description" content="We build production-ready AI platforms, agentic systems, and intelligent automation for enterprise businesses." />
+    <meta property="og:url"         content="https://ragexai.com" />
+    <meta property="og:site_name"   content="RagexAI" />
+
+    <!-- ── Twitter Card ───────────────────────────────────────── -->
+    <meta name="twitter:card"        content="summary_large_image" />
+    <meta name="twitter:title"       content="RagexAI — Engineering Intelligent Digital Experiences" />
+    <meta name="twitter:description" content="We build production-ready AI platforms, agentic systems, and intelligent automation for enterprise businesses." />
+
+    <!-- ── Favicon ────────────────────────────────────────────── -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+    <!-- ── Font preconnect (DNS warm-up) ─────────────────────── -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+    <!--
+      Non-render-blocking font load:
+      Step 1 — load as print (browser ignores it, non-blocking)
+      Step 2 — onload switches media to "all" (applies the font)
+      Step 3 — <noscript> fallback for JS-disabled browsers
+      This saves ~300 ms FCP on slow connections.
+    -->
+    <link
+      rel="stylesheet"
+      media="print"
+      onload="this.media='all'"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+    />
+    <noscript>
+      <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+      />
+    </noscript>
+
+    <!-- ── Critical font fallback (prevents layout shift) ──────── -->
+    <style>
+      body { font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; }
+    </style>
   </head>
   <body>
     <div id="root"></div>
