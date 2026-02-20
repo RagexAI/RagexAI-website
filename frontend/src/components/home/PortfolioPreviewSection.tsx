@@ -1,43 +1,36 @@
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { EcommerceAnimation, AnalyticsAnimation, WorkflowAnimation, MobileAppAnimation } from '../animations/AnimatedPreviews';
 
 const PROJECTS = [
   {
-    title: 'NeuraShop AI',
-    category: 'E-commerce · AI Personalisation',
-    desc: 'Full-stack Shopify alternative with real-time AI recommendations and dynamic pricing engine.',
-    tags: ['Next.js', 'GPT-4', 'Redis', 'Stripe'],
-    metrics: ['+42% conversions', '3× revenue'],
-    Preview: EcommerceAnimation,
-    windowTitle: 'neurashop — dashboard',
+    title: 'Full-Stack E-Commerce Platform',
+    category: 'E-commerce · Storefront',
+    desc: 'Fashion storefront with product catalog, cart, secure Stripe checkout, and order tracking — mobile-first and fast.',
+    tags: ['React', 'Node.js', 'MongoDB', 'Stripe'],
+    metrics: ['Mobile-first', '<2s load'],
+    image: '/images/portfolio/ecommerce-storefront.png',
+    windowTitle: 'ecommerce — storefront',
+    liveUrl: 'https://ecommerce-1-19xk.onrender.com/',
   },
   {
-    title: 'InsightIQ Platform',
-    category: 'BI · Predictive Analytics',
-    desc: 'Enterprise BI with natural language queries, anomaly detection, and predictive forecasting.',
-    tags: ['React', 'Python', 'LangChain'],
-    metrics: ['10× faster reports', '$2M saved/yr'],
-    Preview: AnalyticsAnimation,
-    windowTitle: 'insightiq — analytics',
+    title: 'Shree Krishna Public School',
+    category: 'Education · Web Platform',
+    desc: 'Official school website with online admissions, academics, events, gallery, and RBSE curriculum — 20+ year legacy institution.',
+    tags: ['React', 'CMS', 'SEO', 'Responsive'],
+    metrics: ['20+ yr legacy', '30k+ alumni'],
+    image: '/images/portfolio/shree-krishna-school.png',
+    windowTitle: 'shreekrishna — school website',
+    liveUrl: 'https://www.shreekrishnaschools.com/',
   },
   {
-    title: 'FlowAgent',
-    category: 'Automation · Agentic AI',
-    desc: 'Multi-agent platform processing 2,800 daily workflows with 99.6% accuracy.',
-    tags: ['LangGraph', 'FastAPI', 'AWS'],
-    metrics: ['48h saved/week', '99.6% accuracy'],
-    Preview: WorkflowAnimation,
-    windowTitle: 'flowagent — workflows',
-  },
-  {
-    title: 'MedAssist AI',
-    category: 'HealthTech · Mobile',
-    desc: 'HIPAA-compliant AI health assistant with symptom analysis and appointment booking.',
-    tags: ['Flutter', 'Claude 3', 'HIPAA'],
-    metrics: ['200k users', '4.9★ App Store'],
-    Preview: MobileAppAnimation,
-    windowTitle: 'medassist — mobile preview',
+    title: 'AI School Management System',
+    category: 'EdTech SaaS · AI Chatbot',
+    desc: 'Complete school ops platform — admissions, fees, payroll, transport, exams. Integrated AI chatbot for 24/7 instant query resolution.',
+    tags: ['React', 'Node.js', 'PostgreSQL', 'AI Chatbot'],
+    metrics: ['8+ modules', 'AI 24/7'],
+    image: '/images/portfolio/sms-dashboard.png',
+    windowTitle: 'sms — school management',
+    liveUrl: 'https://sms-frontend-x2jx.vercel.app',
   },
 ];
 
@@ -45,15 +38,16 @@ const cardVariants = {
   hidden:  { opacity: 0, y: 24 },
   visible: (i: number) => ({
     opacity: 1, y: 0,
-    transition: { duration: 0.6, delay: i * 0.09, ease: 'easeOut' as const },
+    transition: { duration: 0.6, delay: i * 0.1, ease: 'easeOut' as const },
   }),
 };
 
 export default function PortfolioPreviewSection() {
   return (
     <section className="section relative overflow-hidden">
-
       <div className="container relative" style={{ zIndex: 2 }}>
+
+        {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -63,9 +57,7 @@ export default function PortfolioPreviewSection() {
         >
           <div>
             <span className="eyebrow mb-5 inline-flex">Featured work</span>
-            <h2 className="t-h2 mt-4">
-              Projects that ship & scale
-            </h2>
+            <h2 className="t-h2 mt-4">Projects that ship & scale</h2>
           </div>
           <Link to="/portfolio" className="btn-outline self-start md:self-auto whitespace-nowrap">
             View all projects
@@ -75,7 +67,8 @@ export default function PortfolioPreviewSection() {
           </Link>
         </motion.div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+        {/* Cards */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {PROJECTS.map((p, i) => (
             <motion.article
               key={i}
@@ -85,8 +78,9 @@ export default function PortfolioPreviewSection() {
               viewport={{ once: true, margin: '-40px' }}
               variants={cardVariants}
               className="glass-card overflow-hidden"
+              style={{ display: 'flex', flexDirection: 'column' }}
             >
-              {/* Preview */}
+              {/* Browser chrome + screenshot */}
               <div>
                 <div style={{
                   display: 'flex', alignItems: 'center', gap: 5,
@@ -94,32 +88,40 @@ export default function PortfolioPreviewSection() {
                   background: 'rgba(235,242,252,0.95)',
                   borderBottom: '1px solid rgba(200,215,235,0.7)',
                 }}>
-                  <span style={{ width: 7, height: 7, borderRadius: '50%', background: '#ff5f57', display: 'inline-block' }} />
-                  <span style={{ width: 7, height: 7, borderRadius: '50%', background: '#febc2e', display: 'inline-block' }} />
-                  <span style={{ width: 7, height: 7, borderRadius: '50%', background: '#28c840', display: 'inline-block' }} />
-                  <span style={{ marginLeft: 8, fontSize: 9, fontWeight: 600, color: '#7a92b0', fontFamily: 'JetBrains Mono, monospace' }}>
+                  <span style={{ width: 7, height: 7, borderRadius: '50%', background: '#ff5f57', display: 'inline-block', flexShrink: 0 }} />
+                  <span style={{ width: 7, height: 7, borderRadius: '50%', background: '#febc2e', display: 'inline-block', flexShrink: 0 }} />
+                  <span style={{ width: 7, height: 7, borderRadius: '50%', background: '#28c840', display: 'inline-block', flexShrink: 0 }} />
+                  <span style={{ marginLeft: 8, fontSize: 9, fontWeight: 600, color: '#7a92b0', fontFamily: 'JetBrains Mono, monospace', flex: 1, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
                     {p.windowTitle}
                   </span>
                   <span style={{
-                    marginLeft: 'auto', fontSize: 8, fontWeight: 700, color: '#059669',
+                    fontSize: 8, fontWeight: 700, color: '#059669', flexShrink: 0,
                     background: 'rgba(5,150,105,0.08)', border: '1px solid rgba(5,150,105,0.18)',
                     padding: '1px 6px', borderRadius: 999,
                   }}>● LIVE</span>
                 </div>
-                <div style={{ height: 180, overflow: 'hidden' }}>
-                  <p.Preview />
+
+                {/* Real screenshot */}
+                <div style={{ height: 190, overflow: 'hidden', background: '#e8f0f8' }}>
+                  <img
+                    src={p.image}
+                    alt={p.title}
+                    style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'top', display: 'block' }}
+                    loading="lazy"
+                  />
                 </div>
               </div>
 
               {/* Content */}
-              <div className="p-6">
-                <div style={{ fontSize: 11, fontWeight: 600, color: 'var(--text-muted)', marginBottom: 6, letterSpacing: '0.03em' }}>
+              <div style={{ padding: '20px 22px 22px', display: 'flex', flexDirection: 'column', flex: 1 }}>
+                <div style={{ fontSize: 10, fontWeight: 600, color: 'var(--text-muted)', marginBottom: 6, letterSpacing: '0.04em' }}>
                   {p.category}
                 </div>
                 <h3 className="t-h3 mb-2">{p.title}</h3>
-                <p className="t-small mb-4" style={{ color: 'var(--text-secondary)' }}>{p.desc}</p>
+                <p className="t-small mb-4" style={{ color: 'var(--text-secondary)', flex: 1 }}>{p.desc}</p>
 
-                <div className="flex flex-wrap gap-1.5 mb-4">
+                {/* Tags */}
+                <div style={{ display: 'flex', flexWrap: 'wrap', gap: 5, marginBottom: 14 }}>
                   {p.tags.map((t, j) => (
                     <span key={j} style={{
                       fontSize: 10, fontWeight: 600,
@@ -131,21 +133,41 @@ export default function PortfolioPreviewSection() {
                   ))}
                 </div>
 
-                <div className="flex flex-wrap gap-2">
-                  {p.metrics.map((m, j) => (
-                    <span key={j} style={{
-                      fontSize: 11, fontWeight: 700,
-                      padding: '3px 10px', borderRadius: 999,
-                      background: 'rgba(26,86,196,0.07)',
-                      border: '1px solid rgba(26,86,196,0.14)',
-                      color: 'var(--blue)',
-                    }}>{m}</span>
-                  ))}
+                {/* Metrics + live link */}
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: 8 }}>
+                  <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6 }}>
+                    {p.metrics.map((m, j) => (
+                      <span key={j} style={{
+                        fontSize: 11, fontWeight: 700,
+                        padding: '3px 10px', borderRadius: 999,
+                        background: 'rgba(26,86,196,0.07)',
+                        border: '1px solid rgba(26,86,196,0.14)',
+                        color: 'var(--blue)',
+                      }}>{m}</span>
+                    ))}
+                  </div>
+                  <a
+                    href={p.liveUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={e => e.stopPropagation()}
+                    style={{
+                      display: 'inline-flex', alignItems: 'center', gap: 4,
+                      fontSize: 11, fontWeight: 600, color: 'var(--blue)',
+                      textDecoration: 'none',
+                    }}
+                  >
+                    View live
+                    <svg width="11" height="11" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                    </svg>
+                  </a>
                 </div>
               </div>
             </motion.article>
           ))}
         </div>
+
       </div>
     </section>
   );

@@ -1,238 +1,239 @@
 import { useState } from 'react';
 import PageHero from '../components/shared/PageHero';
-import Card from '../components/ui/Card';
 import Button from '../components/ui/Button';
-import SectionTitle from '../components/ui/SectionTitle';
 
 interface Project {
   id: string;
   title: string;
   description: string;
-  category: 'AI' | 'E-commerce' | 'Enterprise' | 'SaaS' | 'FinTech' | 'Healthcare';
+  category: 'AI' | 'E-commerce' | 'Enterprise' | 'EdTech';
   image: string;
   technologies: string[];
-  metrics: {
-    label: string;
-    value: string;
-  }[];
-  link: string;
+  metrics: { label: string; value: string }[];
+  liveUrl: string;
 }
 
 const PROJECTS: Project[] = [
   {
-    id: 'ai-powered-crm',
-    title: 'AI-Powered CRM Platform',
-    description: 'Enterprise CRM with AI-driven insights and automation',
-    category: 'AI',
-    image: '/images/portfolio/ai-crm.jpg',
-    technologies: ['React', 'Node.js', 'OpenAI', 'PostgreSQL'],
-    metrics: [
-      { label: 'Increased Sales', value: '40%' },
-      { label: 'Time Saved', value: '60%' },
-    ],
-    link: '/case-studies/ai-crm',
-  },
-  {
-    id: 'ecommerce-marketplace',
-    title: 'Multi-Vendor Marketplace',
-    description: 'Scalable marketplace platform connecting 500+ vendors',
+    id: 'ecommerce-storefront',
+    title: 'Full-Stack E-Commerce Platform',
+    description: 'End-to-end fashion e-commerce storefront with product catalog, collections, cart management, and secure checkout. Built mobile-first with a clean editorial design focused on conversion and browsing experience.',
     category: 'E-commerce',
-    image: '/images/portfolio/marketplace.jpg',
-    technologies: ['Next.js', 'Stripe', 'MongoDB', 'AWS'],
+    image: '/images/portfolio/ecommerce-storefront.png',
+    technologies: ['React', 'Node.js', 'MongoDB', 'Stripe', 'Tailwind CSS'],
     metrics: [
-      { label: 'GMV', value: '$5M+' },
-      { label: 'Active Vendors', value: '500+' },
+      { label: 'Mobile-first design', value: '100%' },
+      { label: 'Page load speed', value: '<2s' },
     ],
-    link: '/case-studies/marketplace',
+    liveUrl: 'https://ecommerce-1-19xk.onrender.com/',
   },
   {
-    id: 'healthcare-platform',
-    title: 'Telemedicine Platform',
-    description: 'HIPAA-compliant telehealth solution',
-    category: 'Healthcare',
-    image: '/images/portfolio/telehealth.jpg',
-    technologies: ['React', 'WebRTC', 'Node.js', 'AWS'],
-    metrics: [
-      { label: 'Consultations', value: '10K+' },
-      { label: 'Patient Satisfaction', value: '85%' },
-    ],
-    link: '/case-studies/telehealth',
-  },
-  {
-    id: 'fintech-app',
-    title: 'Digital Lending Platform',
-    description: 'AI-powered lending platform with instant approvals',
-    category: 'FinTech',
-    image: '/images/portfolio/lending.jpg',
-    technologies: ['React Native', 'Python', 'AI/ML', 'Blockchain'],
-    metrics: [
-      { label: 'Loan Volume', value: '10x' },
-      { label: 'Approval Time', value: 'Instant' },
-    ],
-    link: '/case-studies/lending',
-  },
-  {
-    id: 'saas-analytics',
-    title: 'Analytics SaaS Platform',
-    description: 'Real-time analytics and reporting platform',
-    category: 'SaaS',
-    image: '/images/portfolio/analytics.jpg',
-    technologies: ['React', 'Node.js', 'ClickHouse', 'Kubernetes'],
-    metrics: [
-      { label: 'Users', value: '50K+' },
-      { label: 'Uptime', value: '99.9%' },
-    ],
-    link: '/case-studies/analytics',
-  },
-  {
-    id: 'enterprise-erp',
-    title: 'Enterprise ERP System',
-    description: 'Comprehensive ERP for manufacturing industry',
+    id: 'shree-krishna-schools',
+    title: 'Shree Krishna Public School',
+    description: 'Official website for Shree Krishna Public School, Bikaner — a RBSE-affiliated senior secondary institution with 20+ years of legacy. Features online admissions, campus information, faculty, gallery, events, and a contact system.',
     category: 'Enterprise',
-    image: '/images/portfolio/erp.jpg',
-    technologies: ['Java', 'Spring Boot', 'PostgreSQL', 'Microservices'],
+    image: '/images/portfolio/shree-krishna-school.png',
+    technologies: ['React', 'Responsive Design', 'SEO Optimised', 'CMS'],
     metrics: [
-      { label: 'Cost Reduction', value: '30%' },
-      { label: 'Efficiency Gain', value: '45%' },
+      { label: 'Years of legacy', value: '20+' },
+      { label: 'Success stories', value: '30k+' },
     ],
-    link: '/case-studies/erp',
+    liveUrl: 'https://www.shreekrishnaschools.com/',
+  },
+  {
+    id: 'sms-school-management',
+    title: 'AI-Powered School Management System',
+    description: 'Comprehensive SaaS platform covering every school operation — admissions, fee collection, payroll, transport, exam scheduling, and result management. Integrated AI chatbot handles instant query resolution for staff and parents around the clock, reducing admin overhead significantly.',
+    category: 'AI',
+    image: '/images/portfolio/sms-dashboard.png',
+    technologies: ['React', 'Node.js', 'PostgreSQL', 'AI Chatbot', 'REST API'],
+    metrics: [
+      { label: 'Modules shipped', value: '8+' },
+      { label: 'AI chatbot', value: '24/7' },
+    ],
+    liveUrl: 'https://sms-frontend-x2jx.vercel.app',
   },
 ];
 
+const CATEGORY_COLORS: Record<string, { bg: string; text: string; border: string }> = {
+  'AI':         { bg: 'rgba(26,86,196,0.08)',  text: '#1a56c4', border: 'rgba(26,86,196,0.18)'  },
+  'E-commerce': { bg: 'rgba(13,148,136,0.08)', text: '#0d9488', border: 'rgba(13,148,136,0.18)' },
+  'Enterprise': { bg: 'rgba(99,102,241,0.08)', text: '#6366f1', border: 'rgba(99,102,241,0.18)' },
+  'EdTech':     { bg: 'rgba(245,158,11,0.08)', text: '#d97706', border: 'rgba(245,158,11,0.18)' },
+};
+
 export default function Portfolio() {
   const [selectedCategory, setSelectedCategory] = useState<string>('All');
-  
+
   const categories = ['All', ...Array.from(new Set(PROJECTS.map(p => p.category)))];
-  
-  const filteredProjects = selectedCategory === 'All' 
-    ? PROJECTS 
+  const filtered = selectedCategory === 'All'
+    ? PROJECTS
     : PROJECTS.filter(p => p.category === selectedCategory);
 
   return (
     <>
       <PageHero
-        title="Our Portfolio"
-        subtitle="Explore our successful projects across industries and technologies"
+        title="Our Work"
+        subtitle="Real projects. Shipped and live. Built with precision for real clients."
         primaryCta={{ label: 'Start Your Project', href: '/contact' }}
       />
 
-      {/* Filters */}
-      <section className="py-12 bg-surface border-b border-border">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-wrap gap-3 justify-center">
-            {categories.map((category) => (
+      {/* ── Category filters ────────────────────────────────── */}
+      <section style={{ padding: '40px 0 0', background: 'transparent' }}>
+        <div className="container">
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: 10, justifyContent: 'center' }}>
+            {categories.map(cat => (
               <button
-                key={category}
-                onClick={() => setSelectedCategory(category)}
-                className={`px-6 py-2 rounded-lg font-medium transition-all ${
-                  selectedCategory === category
-                    ? 'bg-primary text-white shadow-md'
-                    : 'bg-background text-body hover:bg-primary/10 hover:text-primary border border-border'
-                }`}
+                key={cat}
+                onClick={() => setSelectedCategory(cat)}
+                style={{
+                  padding: '7px 20px',
+                  borderRadius: 999,
+                  fontSize: 13,
+                  fontWeight: 500,
+                  fontFamily: "'Inter', sans-serif",
+                  cursor: 'pointer',
+                  transition: 'all 0.2s ease',
+                  border: selectedCategory === cat
+                    ? '1px solid rgba(26,86,196,0.30)'
+                    : '1px solid rgba(170,190,212,0.35)',
+                  background: selectedCategory === cat
+                    ? 'rgba(26,86,196,0.09)'
+                    : 'rgba(255,255,255,0.55)',
+                  color: selectedCategory === cat ? '#1a56c4' : 'var(--text-secondary)',
+                }}
               >
-                {category}
+                {cat}
               </button>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Projects Grid */}
-      <section className="py-section bg-background">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {filteredProjects.map((project) => (
-              <Card key={project.id} padding="none" shadow="md" hover to={project.link}>
-                {/* Project Image */}
-                <div className="aspect-video bg-gradient-to-br from-primary/20 to-secondary/20 flex items-center justify-center">
-                  <span className="text-6xl opacity-50">🎯</span>
-                </div>
-                
-                <div className="p-6">
-                  {/* Category Badge */}
-                  <span className="inline-block px-3 py-1 bg-accent/10 text-accent text-xs font-semibold rounded-full mb-3">
-                    {project.category}
-                  </span>
-                  
-                  {/* Title & Description */}
-                  <h3 className="text-xl font-bold text-heading mb-2">{project.title}</h3>
-                  <p className="text-body text-sm mb-4">{project.description}</p>
-                  
-                  {/* Technologies */}
-                  <div className="flex flex-wrap gap-2 mb-4">
-                    {project.technologies.map((tech, idx) => (
-                      <span key={idx} className="px-2 py-1 bg-surface border border-border rounded text-xs">
-                        {tech}
-                      </span>
-                    ))}
+      {/* ── Projects grid ───────────────────────────────────── */}
+      <section className="section" style={{ background: 'transparent' }}>
+        <div className="container">
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))', gap: 28 }}>
+            {filtered.map(project => {
+              const colors = CATEGORY_COLORS[project.category] ?? CATEGORY_COLORS['AI'];
+              return (
+                <div
+                  key={project.id}
+                  className="glass-card"
+                  style={{ borderRadius: 20, overflow: 'hidden', display: 'flex', flexDirection: 'column' }}
+                >
+                  {/* Screenshot */}
+                  <div style={{ position: 'relative', aspectRatio: '16/9', overflow: 'hidden', background: '#e8f0f8' }}>
+                    <img
+                      src={project.image}
+                      alt={project.title}
+                      style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'top', display: 'block' }}
+                      loading="lazy"
+                    />
+                    {/* Live badge */}
+                    <span style={{
+                      position: 'absolute', top: 12, left: 12,
+                      fontSize: 9, fontWeight: 700, color: '#059669',
+                      background: 'rgba(255,255,255,0.92)',
+                      border: '1px solid rgba(5,150,105,0.25)',
+                      padding: '3px 9px', borderRadius: 999,
+                      backdropFilter: 'blur(8px)',
+                    }}>● LIVE</span>
                   </div>
-                  
-                  {/* Metrics */}
-                  <div className="grid grid-cols-2 gap-4 pt-4 border-t border-border">
-                    {project.metrics.map((metric, idx) => (
-                      <div key={idx}>
-                        <div className="text-2xl font-bold text-primary">{metric.value}</div>
-                        <div className="text-xs text-body">{metric.label}</div>
-                      </div>
-                    ))}
+
+                  {/* Content */}
+                  <div style={{ padding: '22px 24px 24px', display: 'flex', flexDirection: 'column', flex: 1 }}>
+
+                    {/* Category pill */}
+                    <span style={{
+                      display: 'inline-block', alignSelf: 'flex-start',
+                      fontSize: 10, fontWeight: 700, letterSpacing: '0.04em',
+                      padding: '3px 10px', borderRadius: 999, marginBottom: 10,
+                      background: colors.bg, border: `1px solid ${colors.border}`, color: colors.text,
+                    }}>{project.category}</span>
+
+                    <h3 style={{ fontSize: 17, fontWeight: 600, color: '#0f172a', lineHeight: 1.3, marginBottom: 10 }}>
+                      {project.title}
+                    </h3>
+                    <p style={{ fontSize: 13.5, color: 'var(--text-secondary)', lineHeight: 1.65, marginBottom: 18, flex: 1 }}>
+                      {project.description}
+                    </p>
+
+                    {/* Tech tags */}
+                    <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6, marginBottom: 18 }}>
+                      {project.technologies.map((tech, i) => (
+                        <span key={i} style={{
+                          fontSize: 10, fontWeight: 600,
+                          padding: '2px 9px', borderRadius: 999,
+                          background: 'rgba(170,190,212,0.15)',
+                          border: '1px solid rgba(170,190,212,0.28)',
+                          color: 'var(--text-muted)',
+                        }}>{tech}</span>
+                      ))}
+                    </div>
+
+                    {/* Metrics */}
+                    <div style={{
+                      display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12,
+                      paddingTop: 16, marginBottom: 18,
+                      borderTop: '1px solid rgba(170,190,212,0.22)',
+                    }}>
+                      {project.metrics.map((m, i) => (
+                        <div key={i}>
+                          <div style={{ fontSize: 20, fontWeight: 700, color: 'var(--blue)', lineHeight: 1 }}>{m.value}</div>
+                          <div style={{ fontSize: 11, color: 'var(--text-muted)', marginTop: 3 }}>{m.label}</div>
+                        </div>
+                      ))}
+                    </div>
+
+                    {/* Live link */}
+                    <a
+                      href={project.liveUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      style={{
+                        display: 'inline-flex', alignItems: 'center', gap: 7,
+                        fontSize: 13, fontWeight: 600, color: '#fff',
+                        padding: '10px 20px', borderRadius: 9,
+                        background: 'linear-gradient(135deg, #1D6DB5, #0E8FBF)',
+                        textDecoration: 'none',
+                        transition: 'all 0.2s ease',
+                        width: 'fit-content',
+                        boxShadow: '0 2px 10px rgba(29,109,181,0.25)',
+                      }}
+                      onMouseEnter={e => { (e.currentTarget as HTMLElement).style.transform = 'translateY(-1px)'; (e.currentTarget as HTMLElement).style.boxShadow = '0 6px 18px rgba(29,109,181,0.32)'; }}
+                      onMouseLeave={e => { (e.currentTarget as HTMLElement).style.transform = ''; (e.currentTarget as HTMLElement).style.boxShadow = '0 2px 10px rgba(29,109,181,0.25)'; }}
+                    >
+                      View Live Project
+                      <svg width="13" height="13" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                      </svg>
+                    </a>
                   </div>
                 </div>
-              </Card>
-            ))}
+              );
+            })}
           </div>
-          
-          {filteredProjects.length === 0 && (
-            <div className="text-center py-12">
-              <p className="text-body text-lg">No projects found in this category.</p>
+
+          {filtered.length === 0 && (
+            <div style={{ textAlign: 'center', padding: '64px 0', color: 'var(--text-muted)' }}>
+              No projects in this category yet.
             </div>
           )}
         </div>
       </section>
 
-      {/* Stats Section */}
-      <section className="py-section bg-primary text-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <SectionTitle
-            title="Portfolio Highlights"
-            subtitle="Our impact in numbers"
-            className="text-white"
-          />
-          
-          <div className="grid md:grid-cols-4 gap-8 mt-12 text-center">
-            <div>
-              <div className="text-5xl font-bold mb-2">50+</div>
-              <div className="text-lg opacity-90">Projects Delivered</div>
-            </div>
-            <div>
-              <div className="text-5xl font-bold mb-2">20+</div>
-              <div className="text-lg opacity-90">Industries Served</div>
-            </div>
-            <div>
-              <div className="text-5xl font-bold mb-2">95%</div>
-              <div className="text-lg opacity-90">Client Satisfaction</div>
-            </div>
-            <div>
-              <div className="text-5xl font-bold mb-2">$50M+</div>
-              <div className="text-lg opacity-90">Business Value Created</div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* CTA Section */}
-      <section className="py-section bg-surface">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-4xl font-bold text-heading mb-6">Ready to Build Your Next Project?</h2>
-          <p className="text-xl text-body mb-8">
-            Let's discuss how we can help you achieve similar results.
+      {/* ── CTA ─────────────────────────────────────────────── */}
+      <section className="section-sm" style={{ background: 'transparent' }}>
+        <div className="container" style={{ textAlign: 'center', maxWidth: 560 }}>
+          <h2 style={{ fontSize: 28, fontWeight: 600, color: '#0f172a', marginBottom: 12 }}>
+            Ready to build your next project?
+          </h2>
+          <p style={{ fontSize: 15, color: 'var(--text-secondary)', marginBottom: 28, lineHeight: 1.6 }}>
+            Let's talk about how we can engineer something great together.
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button variant="primary" size="lg" to="/contact">
-              Start Your Project
-            </Button>
-            <Button variant="outline" size="lg" to="/case-studies">
-              Read Case Studies
-            </Button>
+          <div style={{ display: 'flex', gap: 12, justifyContent: 'center', flexWrap: 'wrap' }}>
+            <Button variant="primary" size="lg" to="/contact">Start Your Project</Button>
           </div>
         </div>
       </section>

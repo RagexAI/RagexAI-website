@@ -320,13 +320,6 @@ export default function Header() {
             {/* Right: CTA group */}
             <div className="hidden lg:flex items-center gap-2">
               <Link to="/contact"
-                className="px-3 py-1.5 text-[13px] font-[500] rounded-lg transition-all duration-200"
-                style={{ color: 'var(--text-secondary)', fontFamily: "'Inter', sans-serif" }}
-                onMouseEnter={e => { (e.currentTarget as HTMLElement).style.color = 'var(--navy)'; }}
-                onMouseLeave={e => { (e.currentTarget as HTMLElement).style.color = ''; }}>
-                Contact
-              </Link>
-              <Link to="/contact"
                 className="group relative inline-flex items-center gap-2 rounded-xl text-[13px] font-semibold text-white overflow-hidden transition-all duration-300 hover:-translate-y-0.5"
                 style={{
                   padding: '9px 20px',
