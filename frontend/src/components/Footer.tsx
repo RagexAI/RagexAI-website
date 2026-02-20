@@ -159,15 +159,7 @@ export default function Footer() {
           <p className="text-xs" style={{ color: 'hsl(var(--color-body) / 0.45)' }}>
             © {new Date().getFullYear()} RagexAI. All rights reserved.
           </p>
-          <div className="flex items-center gap-2.5 text-xs" style={{ color: 'hsl(var(--color-body) / 0.45)' }}>
-            <span>Built with</span>
-            {['React', 'TypeScript', 'AI'].map((t, i) => (
-              <span key={i} className="px-2 py-0.5 rounded-md border text-[10px] font-medium"
-                style={{ borderColor: 'hsl(var(--color-border))', background: 'white', color: 'hsl(var(--color-body) / 0.5)' }}>
-                {t}
-              </span>
-            ))}
-          </div>
+         
         </div>
       </div>
     </footer>

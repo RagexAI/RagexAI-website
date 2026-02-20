@@ -70,7 +70,7 @@ const ChevronDown = ({ open }: { open: boolean }) => (
 );
 
 /* ─── Mega Menu (AI First) ───────────────────────────────────── */
-function MegaMenu({ isOpen, navbarTop }: { isOpen: boolean; navbarTop: number }) {
+function MegaMenu({ isOpen, navbarTop, onItemClick }: { isOpen: boolean; navbarTop: number; onItemClick: () => void }) {
   if (!isOpen) return null;
   return (
     <div
@@ -92,6 +92,7 @@ function MegaMenu({ isOpen, navbarTop }: { isOpen: boolean; navbarTop: number })
                     <li key={item.label}>
                       <Link to={item.href}
                         className="group flex items-start gap-3 px-3 py-3 rounded-xl transition-all duration-150"
+                        onClick={onItemClick}
                         onMouseEnter={e => { (e.currentTarget as HTMLElement).style.background = 'hsl(var(--color-primary) / 0.05)'; }}
                         onMouseLeave={e => { (e.currentTarget as HTMLElement).style.background = ''; }}>
                         {/* Dot */}
@@ -124,6 +125,7 @@ function MegaMenu({ isOpen, navbarTop }: { isOpen: boolean; navbarTop: number })
             </span>
             <Link to="/ai"
               className="group inline-flex items-center gap-1.5 text-xs font-semibold transition-opacity duration-150 hover:opacity-60"
+              onClick={onItemClick}
               style={{ color: '#1a56c4' }}>
               View all AI capabilities
               <svg className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -138,7 +140,7 @@ function MegaMenu({ isOpen, navbarTop }: { isOpen: boolean; navbarTop: number })
 }
 
 /* ─── Standard dropdown ──────────────────────────────────────── */
-function Dropdown({ items, isOpen }: { items: { label: string; href: string; desc: string }[]; isOpen: boolean }) {
+function Dropdown({ items, isOpen, onItemClick }: { items: { label: string; href: string; desc: string }[]; isOpen: boolean; onItemClick: () => void }) {
   if (!isOpen) return null;
   return (
     <div className="absolute left-1/2 -translate-x-1/2 top-full pt-3 z-50"
@@ -153,6 +155,7 @@ function Dropdown({ items, isOpen }: { items: { label: string; href: string; des
             <li key={item.label}>
               <Link to={item.href}
                 className="group flex items-start gap-3 mx-2 px-3 py-2.5 rounded-xl transition-all duration-120"
+                onClick={onItemClick}
                 onMouseEnter={e => { (e.currentTarget as HTMLElement).style.background = 'hsl(var(--color-primary) / 0.05)'; }}
                 onMouseLeave={e => { (e.currentTarget as HTMLElement).style.background = ''; }}>
                 <span className="mt-1.5 flex-shrink-0 w-1.5 h-1.5 rounded-full transition-colors duration-150"
@@ -238,6 +241,7 @@ export default function Header() {
   const [openMenu, setOpenMenu] = useState<string | null>(null);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [navHeight, setNavHeight] = useState(60);
+  const location = useLocation();
   const navRef = useRef<HTMLDivElement>(null);
   const timeoutRef = useRef<number | null>(null);
 
@@ -251,11 +255,21 @@ export default function Header() {
     if (navRef.current) setNavHeight(navRef.current.getBoundingClientRect().height);
   });
 
+  useEffect(() => {
+    setOpenMenu(null);
+    setMobileOpen(false);
+  }, [location.pathname]);
+
   const open  = (menu: string) => {
     if (timeoutRef.current) { clearTimeout(timeoutRef.current); timeoutRef.current = null; }
     setOpenMenu(menu);
   };
   const close = () => { timeoutRef.current = window.setTimeout(() => setOpenMenu(null), 140); };
+  const closeAll = () => {
+    if (timeoutRef.current) { clearTimeout(timeoutRef.current); timeoutRef.current = null; }
+    setOpenMenu(null);
+    setMobileOpen(false);
+  };
 
   const navItems = [
     { key: 'ai-first',   label: 'AI First',   isMega: true,  dropdownItems: null,              href: undefined },
@@ -309,8 +323,8 @@ export default function Header() {
                   <div key={nav.key} className="relative" onMouseEnter={() => open(nav.key)} onMouseLeave={close}>
                     <NavBtn label={nav.label} active={openMenu === nav.key} transparent={!scrolled} />
                     {nav.isMega
-                      ? <MegaMenu isOpen={openMenu === nav.key} navbarTop={navHeight} />
-                      : nav.dropdownItems && <Dropdown items={nav.dropdownItems} isOpen={openMenu === nav.key} />
+                      ? <MegaMenu isOpen={openMenu === nav.key} navbarTop={navHeight} onItemClick={closeAll} />
+                      : nav.dropdownItems && <Dropdown items={nav.dropdownItems} isOpen={openMenu === nav.key} onItemClick={closeAll} />
                     }
                   </div>
                 )
@@ -321,6 +335,7 @@ export default function Header() {
             <div className="hidden lg:flex items-center gap-2">
               <Link to="/contact"
                 className="group relative inline-flex items-center gap-2 rounded-xl text-[13px] font-semibold text-white overflow-hidden transition-all duration-300 hover:-translate-y-0.5"
+                onClick={closeAll}
                 style={{
                   padding: '9px 20px',
                   background: 'linear-gradient(135deg, #1D6DB5, #0E8FBF)',
@@ -361,7 +376,7 @@ export default function Header() {
                 <Link key={nav.key} to={nav.href}
                   className="flex items-center justify-between px-4 py-3 rounded-xl text-sm font-medium"
                   style={{ color: 'var(--navy)' }}
-                  onClick={() => setMobileOpen(false)}>
+                  onClick={closeAll}>
                   {nav.label}
                 </Link>
               ) : (
@@ -378,7 +393,7 @@ export default function Header() {
                             <Link key={i.label} to={i.href}
                               className="block py-2 pl-3 text-sm"
                               style={{ color: 'var(--text-secondary)' }}
-                              onClick={() => setMobileOpen(false)}>
+                              onClick={closeAll}>
                               {i.label}
                             </Link>
                           ))}
@@ -388,7 +403,7 @@ export default function Header() {
                         <Link key={i.label} to={i.href}
                           className="flex items-start gap-3 px-4 py-2.5 rounded-xl"
                           style={{ color: 'var(--text-secondary)' }}
-                          onClick={() => setMobileOpen(false)}>
+                          onClick={closeAll}>
                           <span className="mt-1.5 w-1.5 h-1.5 rounded-full flex-shrink-0" style={{ background: '#c8d8e8' }} />
                           <div>
                             <div className="text-sm font-medium" style={{ color: 'var(--navy)' }}>{i.label}</div>
@@ -403,7 +418,7 @@ export default function Header() {
             <div className="pt-4 pb-1 px-1">
               <Link to="/contact"
                 className="flex items-center justify-center gap-2 w-full py-3.5 rounded-2xl text-sm font-semibold text-white"
-                onClick={() => setMobileOpen(false)}
+                onClick={closeAll}
                 style={{ background: 'linear-gradient(135deg, #1a56c4, hsl(var(--color-secondary)))', boxShadow: '0 4px 16px hsl(var(--color-primary)/.3)' }}>
                 Let's Connect
                 <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
