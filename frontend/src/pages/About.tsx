@@ -16,8 +16,13 @@ const LEADERSHIP = [
   },
   { 
     name: 'Shagun Yadav', 
-    role: 'Lead Intern', 
+    role: 'Founder', 
     bio: 'Intern at Candex AI, contributing to product execution and modern application development.' 
+  },
+   { 
+    name: 'Aditya Kumar Arya', 
+    role: 'Founder', 
+    bio: 'I’ve worked at Ingenious E-Brain, RemoteEngine, LiquidMind AI, and Foodbot.ai, building RAG systems, fine-tuning LLMs, developing OCR solutions, and creating low-latency voice agents.' 
   },
 ];
 

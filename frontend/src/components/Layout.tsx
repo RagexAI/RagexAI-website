@@ -1,7 +1,6 @@
 import { useState, useEffect, type ReactNode } from 'react';
 import Header from './Header';
 import Footer from './Footer';
-import StickyCTA from './shared/StickyCTA';
 import GlobalBackground from './GlobalBackground';
 import PageLoader from './PageLoader';
 
@@ -31,7 +30,6 @@ export default function Layout({ children }: LayoutProps) {
         <Header />
         <main className="flex-1">{children}</main>
         <Footer />
-        <StickyCTA />
       </div>
     </>
   );
