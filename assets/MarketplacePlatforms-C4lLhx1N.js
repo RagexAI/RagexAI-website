@@ -1,0 +1,1 @@
+import{j as r}from"./vendor-react-BShjbBE1.js";import{S as a,a as m}from"./solutions.content-B6d9M2Cl.js";import"./PageHero-UCvgHqmp.js";import"./vendor-router-BvxseeOr.js";import"./Card-Dicy2K0z.js";import"./Button-B8nNC1wz.js";import"./SectionTitle-brz4xhkh.js";function u(){const t=a.find(o=>o.id==="marketplace-platforms");return r.jsx(m,{solution:t})}export{u as default};

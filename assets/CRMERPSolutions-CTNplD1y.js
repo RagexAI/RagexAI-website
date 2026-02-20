@@ -1,0 +1,1 @@
+import{j as i}from"./vendor-react-BShjbBE1.js";import{S as r,a as m}from"./solutions.content-B6d9M2Cl.js";import"./PageHero-UCvgHqmp.js";import"./vendor-router-BvxseeOr.js";import"./Card-Dicy2K0z.js";import"./Button-B8nNC1wz.js";import"./SectionTitle-brz4xhkh.js";function f(){const o=r.find(t=>t.id==="crm-erp-solutions");return i.jsx(m,{solution:o})}export{f as default};

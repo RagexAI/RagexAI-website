@@ -1,0 +1,1 @@
+import{j as o}from"./vendor-react-BShjbBE1.js";import{S as r,a as p}from"./solutions.content-B6d9M2Cl.js";import"./PageHero-UCvgHqmp.js";import"./vendor-router-BvxseeOr.js";import"./Card-Dicy2K0z.js";import"./Button-B8nNC1wz.js";import"./SectionTitle-brz4xhkh.js";function f(){const t=r.find(i=>i.id==="enterprise-applications");return o.jsx(p,{solution:t})}export{f as default};
