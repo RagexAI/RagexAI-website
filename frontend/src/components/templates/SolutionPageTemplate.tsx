@@ -38,20 +38,20 @@ interface SolutionPageTemplateProps {
 const SolutionPageTemplate = ({ solution, caseStudies }: SolutionPageTemplateProps) => {
   const faqs = [
     {
-      question: `Is ${solution.title} right for my business?`,
-      answer: 'We start with a discovery call to understand your needs and determine if this solution is the best fit. We provide honest recommendations even if it means suggesting alternatives.',
+      title: `Is ${solution.title} right for my business?`,
+      content: 'We start with a discovery call to understand your needs and determine if this solution is the best fit. We provide honest recommendations even if it means suggesting alternatives.',
     },
     {
-      question: 'How do you ensure the solution meets our requirements?',
-      answer: 'We follow an agile development process with regular demos and feedback sessions. You are involved in every stage from planning to deployment.',
+      title: 'How do you ensure the solution meets our requirements?',
+      content: 'We follow an agile development process with regular demos and feedback sessions. You are involved in every stage from planning to deployment.',
     },
     {
-      question: 'What happens after the solution is deployed?',
-      answer: 'We provide training, documentation, and ongoing support. We also offer maintenance packages to ensure your solution continues to perform optimally.',
+      title: 'What happens after the solution is deployed?',
+      content: 'We provide training, documentation, and ongoing support. We also offer maintenance packages to ensure your solution continues to perform optimally.',
     },
     {
-      question: 'Can the solution scale as we grow?',
-      answer: 'Absolutely. We build solutions with scalability in mind, using modern architecture patterns that can handle growth in users, data, and features.',
+      title: 'Can the solution scale as we grow?',
+      content: 'Absolutely. We build solutions with scalability in mind, using modern architecture patterns that can handle growth in users, data, and features.',
     },
   ];
 

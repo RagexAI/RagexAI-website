@@ -1,63 +1,150 @@
 import { Link } from 'react-router-dom';
-import ScrollReveal from '../ui/ScrollReveal';
-import SectionTitle from '../ui/SectionTitle';
-import { IconArrowRight, IconCpu, IconCart, IconHospital, IconDollarSign } from '../icons/FeatureIcons';
+import { motion } from 'framer-motion';
+import { EcommerceAnimation, AnalyticsAnimation, WorkflowAnimation, MobileAppAnimation } from '../animations/AnimatedPreviews';
 
-const FEATURED_PROJECTS = [
-  { title: 'AI-Powered CRM Platform', category: 'AI', metric: '40% sales increase', href: '/portfolio', Icon: IconCpu, gradient: 'from-primary/20 to-violet-500/20' },
-  { title: 'Multi-Vendor E-commerce Marketplace', category: 'E-commerce', metric: '$5M+ GMV', href: '/portfolio', Icon: IconCart, gradient: 'from-accent/20 to-emerald-500/20' },
-  { title: 'Telemedicine Platform', category: 'Healthcare', metric: '10K+ consultations', href: '/portfolio', Icon: IconHospital, gradient: 'from-cyan-500/20 to-primary/20' },
-  { title: 'Digital Lending Platform', category: 'FinTech', metric: 'Instant approvals', href: '/portfolio', Icon: IconDollarSign, gradient: 'from-secondary/20 to-primary/20' },
+const PROJECTS = [
+  {
+    title: 'NeuraShop AI',
+    category: 'E-commerce · AI Personalisation',
+    desc: 'Full-stack Shopify alternative with real-time AI recommendations and dynamic pricing engine.',
+    tags: ['Next.js', 'GPT-4', 'Redis', 'Stripe'],
+    metrics: ['+42% conversions', '3× revenue'],
+    Preview: EcommerceAnimation,
+    windowTitle: 'neurashop — dashboard',
+  },
+  {
+    title: 'InsightIQ Platform',
+    category: 'BI · Predictive Analytics',
+    desc: 'Enterprise BI with natural language queries, anomaly detection, and predictive forecasting.',
+    tags: ['React', 'Python', 'LangChain'],
+    metrics: ['10× faster reports', '$2M saved/yr'],
+    Preview: AnalyticsAnimation,
+    windowTitle: 'insightiq — analytics',
+  },
+  {
+    title: 'FlowAgent',
+    category: 'Automation · Agentic AI',
+    desc: 'Multi-agent platform processing 2,800 daily workflows with 99.6% accuracy.',
+    tags: ['LangGraph', 'FastAPI', 'AWS'],
+    metrics: ['48h saved/week', '99.6% accuracy'],
+    Preview: WorkflowAnimation,
+    windowTitle: 'flowagent — workflows',
+  },
+  {
+    title: 'MedAssist AI',
+    category: 'HealthTech · Mobile',
+    desc: 'HIPAA-compliant AI health assistant with symptom analysis and appointment booking.',
+    tags: ['Flutter', 'Claude 3', 'HIPAA'],
+    metrics: ['200k users', '4.9★ App Store'],
+    Preview: MobileAppAnimation,
+    windowTitle: 'medassist — mobile preview',
+  },
 ];
+
+const cardVariants = {
+  hidden:  { opacity: 0, y: 24 },
+  visible: (i: number) => ({
+    opacity: 1, y: 0,
+    transition: { duration: 0.6, delay: i * 0.09, ease: 'easeOut' as const },
+  }),
+};
 
 export default function PortfolioPreviewSection() {
   return (
-    <section className="py-section bg-background gradient-mesh">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <ScrollReveal>
-          <SectionTitle
-            title="Portfolio Preview"
-            subtitle="Featured projects across AI, E-commerce, and Enterprise"
-          />
-        </ScrollReveal>
-        <div className="mt-14 grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {FEATURED_PROJECTS.map((project) => (
-            <ScrollReveal key={project.title}>
-              <Link
-                to={project.href}
-                className="group block h-full rounded-2xl border border-border bg-white overflow-hidden shadow-sm gradient-card-hover"
-              >
-                <div className={`relative aspect-video bg-gradient-to-br ${project.gradient} flex items-center justify-center p-6`}>
-                  <div className="grid grid-cols-3 gap-2">
-                    {[1, 2, 3, 4, 5, 6].map((i) => (
-                      <div key={i} className="w-8 h-8 rounded-lg bg-white/60 backdrop-blur-sm" />
-                    ))}
-                  </div>
-                  <div className="absolute bottom-4 right-4 rounded-lg bg-white/80 p-2 shadow-sm">
-                    <project.Icon className="w-6 h-6 text-primary" />
-                  </div>
-                </div>
-                <div className="p-6">
-                  <span className="text-xs font-semibold text-accent uppercase tracking-wider">{project.category}</span>
-                  <h3 className="text-lg font-bold text-heading mt-2 mb-1">{project.title}</h3>
-                  <p className="text-sm text-body font-medium">{project.metric}</p>
-                  <span className="mt-4 inline-flex items-center text-sm font-semibold text-accent opacity-0 group-hover:opacity-100 group-hover:gap-2 gap-1 transition-all">
-                    View project
-                    <IconArrowRight className="w-4 h-4 flex-shrink-0" />
-                  </span>
-                </div>
-              </Link>
-            </ScrollReveal>
-          ))}
-        </div>
-        <div className="mt-12 text-center">
-          <Link
-            to="/portfolio"
-            className="inline-flex items-center justify-center px-6 py-3.5 text-sm font-semibold text-heading rounded-xl border-2 border-border hover:border-primary hover:text-primary hover:bg-primary/5 transition-all duration-300"
-          >
-            View All Portfolio
-            <IconArrowRight className="w-4 h-4 ml-2" />
+    <section className="section relative overflow-hidden">
+
+      <div className="container relative" style={{ zIndex: 2 }}>
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6, ease: 'easeOut' as const }}
+          className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12"
+        >
+          <div>
+            <span className="eyebrow mb-5 inline-flex">Featured work</span>
+            <h2 className="t-h2 mt-4">
+              Projects that ship & scale
+            </h2>
+          </div>
+          <Link to="/portfolio" className="btn-outline self-start md:self-auto whitespace-nowrap">
+            View all projects
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+            </svg>
           </Link>
+        </motion.div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+          {PROJECTS.map((p, i) => (
+            <motion.article
+              key={i}
+              custom={i}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, margin: '-40px' }}
+              variants={cardVariants}
+              className="glass-card overflow-hidden"
+            >
+              {/* Preview */}
+              <div>
+                <div style={{
+                  display: 'flex', alignItems: 'center', gap: 5,
+                  padding: '8px 12px',
+                  background: 'rgba(235,242,252,0.95)',
+                  borderBottom: '1px solid rgba(200,215,235,0.7)',
+                }}>
+                  <span style={{ width: 7, height: 7, borderRadius: '50%', background: '#ff5f57', display: 'inline-block' }} />
+                  <span style={{ width: 7, height: 7, borderRadius: '50%', background: '#febc2e', display: 'inline-block' }} />
+                  <span style={{ width: 7, height: 7, borderRadius: '50%', background: '#28c840', display: 'inline-block' }} />
+                  <span style={{ marginLeft: 8, fontSize: 9, fontWeight: 600, color: '#7a92b0', fontFamily: 'JetBrains Mono, monospace' }}>
+                    {p.windowTitle}
+                  </span>
+                  <span style={{
+                    marginLeft: 'auto', fontSize: 8, fontWeight: 700, color: '#059669',
+                    background: 'rgba(5,150,105,0.08)', border: '1px solid rgba(5,150,105,0.18)',
+                    padding: '1px 6px', borderRadius: 999,
+                  }}>● LIVE</span>
+                </div>
+                <div style={{ height: 180, overflow: 'hidden' }}>
+                  <p.Preview />
+                </div>
+              </div>
+
+              {/* Content */}
+              <div className="p-6">
+                <div style={{ fontSize: 11, fontWeight: 600, color: 'var(--text-muted)', marginBottom: 6, letterSpacing: '0.03em' }}>
+                  {p.category}
+                </div>
+                <h3 className="t-h3 mb-2">{p.title}</h3>
+                <p className="t-small mb-4" style={{ color: 'var(--text-secondary)' }}>{p.desc}</p>
+
+                <div className="flex flex-wrap gap-1.5 mb-4">
+                  {p.tags.map((t, j) => (
+                    <span key={j} style={{
+                      fontSize: 10, fontWeight: 600,
+                      padding: '2px 8px', borderRadius: 999,
+                      background: 'rgba(170,190,212,0.15)',
+                      border: '1px solid rgba(170,190,212,0.28)',
+                      color: 'var(--text-muted)',
+                    }}>{t}</span>
+                  ))}
+                </div>
+
+                <div className="flex flex-wrap gap-2">
+                  {p.metrics.map((m, j) => (
+                    <span key={j} style={{
+                      fontSize: 11, fontWeight: 700,
+                      padding: '3px 10px', borderRadius: 999,
+                      background: 'rgba(26,86,196,0.07)',
+                      border: '1px solid rgba(26,86,196,0.14)',
+                      color: 'var(--blue)',
+                    }}>{m}</span>
+                  ))}
+                </div>
+              </div>
+            </motion.article>
+          ))}
         </div>
       </div>
     </section>
