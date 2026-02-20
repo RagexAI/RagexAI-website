@@ -1,1 +1,0 @@
-import{j as o}from"./vendor-react-BShjbBE1.js";import{I as i,a as m}from"./industries.content-Gr5fYrqv.js";import"./PageHero-UCvgHqmp.js";import"./vendor-router-BvxseeOr.js";import"./Card-Dicy2K0z.js";import"./Button-B8nNC1wz.js";import"./SectionTitle-brz4xhkh.js";function f(){const t=i.find(r=>r.id==="edtech");return o.jsx(m,{industry:t})}export{f as default};

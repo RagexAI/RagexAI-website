@@ -1,0 +1,1 @@
+import{j as m}from"./vendor-react-BShjbBE1.js";import{I as o,a as e}from"./industries.content-CeqfYJGg.js";import"./PageHero-MIEdhrKF.js";import"./vendor-router-CnEPwgW-.js";import"./Card--q8LeDvP.js";import"./Button-B3lzw01x.js";import"./SectionTitle-brz4xhkh.js";function d(){const r=o.find(t=>t.id==="ecommerce");return m.jsx(e,{industry:r})}export{d as default};

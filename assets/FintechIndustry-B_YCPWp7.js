@@ -1,0 +1,1 @@
+import{j as i}from"./vendor-react-BShjbBE1.js";import{I as o,a as m}from"./industries.content-CeqfYJGg.js";import"./PageHero-MIEdhrKF.js";import"./vendor-router-CnEPwgW-.js";import"./Card--q8LeDvP.js";import"./Button-B3lzw01x.js";import"./SectionTitle-brz4xhkh.js";function f(){const t=o.find(r=>r.id==="fintech");return i.jsx(m,{industry:t})}export{f as default};
