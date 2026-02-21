@@ -13,23 +13,15 @@ export const ROUTE_PATHS = {
   AI_SOLUTIONS: "/ai/solutions",
   AI_SOLUTIONS_DETAIL: "/ai/solutions/:slug",
 
-  SERVICES_ECOMMERCE: "/services/ecommerce-development",
-  SERVICES_DEVOPS: "/services/devops-cloud-security",
-  SERVICES_DIGITAL_TRANSFORMATION: "/services/digital-transformation",
-  SERVICES_MANAGED_IT: "/services/managed-it-services",
-  SERVICES_AI_ML: "/services/ai-ml-automation",
-  SERVICES_WEB_MOBILE: "/services/web-mobile-development",
-  SERVICES_SAAS: "/services/saas-product-development",
+  SERVICE_PAGE : "/services/:serviceId",
 
-  SOLUTIONS_WEB_APPS: "/solutions/web-applications",
-  SOLUTIONS_ENTERPRISE_APPS: "/solutions/enterprise-applications",
-  SOLUTIONS_CRM_ERP: "/solutions/crm-erp-solutions",
-  SOLUTIONS_MARKETPLACE: "/solutions/marketplace-platforms",
-  SOLUTIONS_CLOUD: "/solutions/cloud-migration",
+
+  SOLUTIONS_PAGE: "/solutions/:solution",
+
 
   INDUSTRIES: "/industries",
-  INDUSTRY_DETAIL: "/industries/:id",
-
+  INDUSTRY_DETAIL: "/industry/:id",
+  INDUSTRY_PAGE: "/industries/:industryId",
   INDUSTRY_ECOMMERCE: "/industries/ecommerce",
   INDUSTRY_HEALTHCARE: "/industries/healthcare",
   INDUSTRY_FINTECH: "/industries/fintech",
