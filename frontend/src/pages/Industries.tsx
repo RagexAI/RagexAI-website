@@ -17,7 +17,7 @@ export default function Industries() {
             {INDUSTRIES_LIST.map((ind) => (
               <ScrollReveal key={ind.id}>
                 <Link
-                  to={`/industries/${ind.id}`}
+                  to={`/industry/${ind.id}`}
                   className="block p-8 rounded-xl bg-page border border-divider shadow-card hover:shadow-lg hover:border-slate-200 transition-all duration-300 hover:-translate-y-0.5"
                 >
                   <h2 className="text-xl font-semibold text-slate mb-3">{ind.name}</h2>

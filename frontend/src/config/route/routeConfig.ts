@@ -1,6 +1,7 @@
 import { lazy, ComponentType, LazyExoticComponent } from "react";
 import { ROUTE_PATHS } from "./routes";
 
+
 // Type for route config
 export interface AppRoute {
   path: string;
@@ -16,29 +17,15 @@ const CoreAI = lazy(() => import("../../pages/ai/CoreAI"));
 const AgenticAI = lazy(() => import("../../pages/ai/AgenticAI"));
 const AISolutionsByIndustry = lazy(() => import("../../pages/ai/AISolutionsByIndustry"));
 
-const EcommerceDevelopment = lazy(() => import("../../pages/services/EcommerceDevelopment"));
-const DevOpsCloudSecurity = lazy(() => import("../../pages/services/DevOpsCloudSecurity"));
-const DigitalTransformation = lazy(() => import("../../pages/services/DigitalTransformation"));
-const ManagedITServices = lazy(() => import("../../pages/services/ManagedITServices"));
-const AIMLAutomation = lazy(() => import("../../pages/services/AIMLAutomation"));
-const WebMobileDevelopment = lazy(() => import("../../pages/services/WebMobileDevelopment"));
-const SaaSProductDevelopment = lazy(() => import("../../pages/services/SaaSProductDevelopment"));
+const ServicePage = lazy(()=> import("../../pages/services/ServicePage"))
 
-const WebApplications = lazy(() => import("../../pages/solutions/WebApplications"));
-const EnterpriseApplications = lazy(() => import("../../pages/solutions/EnterpriseApplications"));
-const CRMERPSolutions = lazy(() => import("../../pages/solutions/CRMERPSolutions"));
-const MarketplacePlatforms = lazy(() => import("../../pages/solutions/MarketplacePlatforms"));
-const CloudMigration = lazy(() => import("../../pages/solutions/CloudMigration"));
+const SolutionPage = lazy(()=>import ("../../pages/solutions/SolutionPage"))
+
 
 const Industries = lazy(() => import("../../pages/Industries"));
+const IndustryPage  = lazy(()=> import ("../../pages/industries/IndustriesPage"))
 const IndustryDetail = lazy(() => import("../../pages/IndustryDetail"));
 
-const EcommerceIndustry = lazy(() => import("../../pages/industries/EcommerceIndustry"));
-const HealthcareIndustry = lazy(() => import("../../pages/industries/HealthcareIndustry"));
-const FintechIndustry = lazy(() => import("../../pages/industries/FintechIndustry"));
-const EdtechIndustry = lazy(() => import("../../pages/industries/EdtechIndustry"));
-const SaaSIndustry = lazy(() => import("../../pages/industries/SaaSIndustry"));
-const RealEstateIndustry = lazy(() => import("../../pages/industries/RealEstateIndustry"));
 
 const CaseStudies = lazy(() => import("../../pages/CaseStudies"));
 const CaseStudyDetail = lazy(() => import("../../pages/CaseStudyDetail"));
@@ -71,31 +58,16 @@ export const ROUTES: AppRoute[] = [
   { path: ROUTE_PATHS.AI_SOLUTIONS_DETAIL, component: AISolutionsByIndustry },
 
     /* Service Routes */
-  { path: ROUTE_PATHS.SERVICES_ECOMMERCE, component: EcommerceDevelopment },
-  { path: ROUTE_PATHS.SERVICES_DEVOPS, component: DevOpsCloudSecurity },
-  { path: ROUTE_PATHS.SERVICES_DIGITAL_TRANSFORMATION, component: DigitalTransformation },
-  { path: ROUTE_PATHS.SERVICES_MANAGED_IT, component: ManagedITServices },
-  { path: ROUTE_PATHS.SERVICES_AI_ML, component: AIMLAutomation },
-  { path: ROUTE_PATHS.SERVICES_WEB_MOBILE, component: WebMobileDevelopment },
-  { path: ROUTE_PATHS.SERVICES_SAAS, component: SaaSProductDevelopment },
+  {path : ROUTE_PATHS.SERVICE_PAGE , component : ServicePage},
 
   /* Solution Routes */
-  { path: ROUTE_PATHS.SOLUTIONS_WEB_APPS, component: WebApplications },
-  { path: ROUTE_PATHS.SOLUTIONS_ENTERPRISE_APPS, component: EnterpriseApplications },
-  { path: ROUTE_PATHS.SOLUTIONS_CRM_ERP, component: CRMERPSolutions },
-  { path: ROUTE_PATHS.SOLUTIONS_MARKETPLACE, component: MarketplacePlatforms },
-  { path: ROUTE_PATHS.SOLUTIONS_CLOUD, component: CloudMigration },
+  { path: ROUTE_PATHS.SOLUTIONS_PAGE, component: SolutionPage },
+
 
   /* Industry Routes */
   { path: ROUTE_PATHS.INDUSTRIES, component: Industries },
   { path: ROUTE_PATHS.INDUSTRY_DETAIL, component: IndustryDetail },
-
-  { path: ROUTE_PATHS.INDUSTRY_ECOMMERCE, component: EcommerceIndustry },
-  { path: ROUTE_PATHS.INDUSTRY_HEALTHCARE, component: HealthcareIndustry },
-  { path: ROUTE_PATHS.INDUSTRY_FINTECH, component: FintechIndustry },
-  { path: ROUTE_PATHS.INDUSTRY_EDTECH, component: EdtechIndustry },
-  { path: ROUTE_PATHS.INDUSTRY_SAAS, component: SaaSIndustry },
-  { path: ROUTE_PATHS.INDUSTRY_REAL_ESTATE, component: RealEstateIndustry },
+  {path : ROUTE_PATHS.INDUSTRY_PAGE , component : IndustryPage},
 
   /* Legacy Routes */
   { path: ROUTE_PATHS.CASE_STUDIES, component: CaseStudies },

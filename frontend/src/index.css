@@ -2,12 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-/* ═══════════════════════════════════════════════════════════════
-   RAGEX AI  ·  Design System
-   Inspired by Kore.ai — clean, airy, enterprise-grade
-   ONE primary: #1a56c4  |  ONE accent: #0d9488 (teal, sparingly)
-   Background family: #f2f7fb → #dce8f3 → #c3d5e6 → #aabed4
-   ═══════════════════════════════════════════════════════════════ */
 
 :root {
   --blue:       #1a56c4;
@@ -81,7 +75,7 @@ h1, h2, h3, h4, h5, h6 {
    KEYFRAMES
    ═══════════════════════════════════════════════════════════════ */
 
-/* Slow floating blobs — kore.ai signature */
+/* Slow floating blobs */
 @keyframes blob1 {
   0%,100% { transform: translate(0, 0)   scale(1);    }
   25%      { transform: translate(40px, -30px) scale(1.06); }
